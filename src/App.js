@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Images from './components/Images';
 import './App.css';
 import Data from './data.json';
+import Pagination from "react-js-pagination";
 
-function App() {
+const App = () => {
+  const [images, setImages] = useState([Data]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [imagesPerPage, setImagesPerPage] = useState(6);
+
+  console.log(images);
+
   return (
     <div className="App">
       <div className="footer">12 изображений</div>
-      <div className="wrapper">
-      {Data.map((postDetail, index) => {
-          return <div key={index} className="images">
-          <img src={postDetail.sample_url} alt="Image" className="image" />
-          <p>Выберите лицензию</p>
-          </div>
-        })}
-      </div>
+      <Images images={images} loading={loading} />
     </div>
   );
-}
-
-console.log(Data);
+};
 
 export default App;
