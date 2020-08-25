@@ -1,19 +1,32 @@
 .App {
   text-align: center;
-  display: flex;
-  justify-content: space-around;
-  width: 1200px;
-  flex-wrap: wrap;
-
 }
 
+.footer {
+  padding-top: 30px;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 1200px;
+  margin: 0 auto;
+  padding-top: 30px;
+}
+
+
 .images {
-  width: 600px;
+  width: 350px;
+  height: 280px;
+  border:  1px solid #D3D3D3;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  margin-bottom: 40px;
 }
 
 .image {
-  width: 400;
-  height: 200;
+  width: 350px;
+  height: 220px;
   background-size: cover;
 }
 
