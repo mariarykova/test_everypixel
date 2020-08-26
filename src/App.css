@@ -30,6 +30,16 @@
   background-size: cover;
 }
 
+.pages {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-around;
+  width: 100px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
