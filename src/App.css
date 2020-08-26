@@ -1,9 +1,13 @@
 .App {
   text-align: center;
+  background-color: #F5F5F5;
+  height: 100vh;
 }
 
-.footer {
+.header {
   padding-top: 30px;
+  padding-left: 275px;
+  text-align: start;
 }
 
 .wrapper {
@@ -28,6 +32,37 @@
   width: 350px;
   height: 220px;
   background-size: cover;
+}
+
+.title {
+  display: flex;
+  width: 250px;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.question-box {
+  background-color: #696969;
+  color: white;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding-top: 3px;
+}
+
+.triangle {
+  font-size: 10px;
+  color: #696969;
+}
+
+.pagination {
+  background: #f2f6f8; /* Цвет фона */
+  border: 1px solid #7a7b7e; /* Параметры рамки */
+  width: 60px; /* Ширина кнопки */
+  height: 60px; /* Высота */
+  border-radius: 30px;
 }
 
 .pages {

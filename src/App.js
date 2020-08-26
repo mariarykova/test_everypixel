@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
+import Pagination from './components/Pagination';
 import Data from './data.json';
-import Pagination from "react-js-pagination";
 
 class App extends React.Component {
   constructor() {
@@ -9,7 +9,8 @@ class App extends React.Component {
     this.state = {
       images: [Data],
       currentPage: 1,
-      imagesPerPage: 6
+      imagesPerPage: 6,
+      activePage: 1
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -20,7 +21,7 @@ class App extends React.Component {
     });
   }
 
-  render() {
+   render() {
     const { images, currentPage, imagesPerPage } = this.state;
 
     // Logic for displaying images
@@ -33,7 +34,11 @@ class App extends React.Component {
       return (
           <div key={index} className="images">
           <img src={image.sample_url} alt="Image" className="image" />
-          <p>Выберите лицензию</p>
+          <div className="title">
+          <span className="question-box">?</span>
+          <span className="triangle">&#9660;</span>
+          <span className="text">Выберите лицензию</span>
+          </div>
         </div>
       )
     });
@@ -46,7 +51,7 @@ class App extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div
+        <div className="pagination"
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -56,16 +61,17 @@ class App extends React.Component {
       );
     });
 
-    return (
+
+        return (
       <div className="App">
-        <div className="footer">12 изображений</div>
+        <div className="header">12 изображений</div>
         <div className="wrapper">
         {renderImages}  
         </div>
         <div className="pages">
         {renderPageNumbers}
         </div>
-      </div>
+        </div>
     );
   }
 }
