@@ -5,9 +5,11 @@
 }
 
 .header {
+  display: flex;
   padding-top: 30px;
-  padding-left: 275px;
-  text-align: start;
+  width: 1150px;
+  margin: 0 auto;
+  justify-content: flex-start;
 }
 
 .wrapper {
@@ -17,6 +19,12 @@
   width: 1200px;
   margin: 0 auto;
   padding-top: 30px;
+}
+
+.checkbox {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
 }
 
 
@@ -59,11 +67,9 @@
 
 .pagination {
   background: #f2f6f8; /* Цвет фона */
-  border: 1px solid #7a7b7e; /* Параметры рамки */
   width: 60px; /* Ширина кнопки */
   height: 60px; /* Высота */
-  border-radius: 30px;
-}
+  }
 
 .pages {
   display: flex;

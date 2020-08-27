@@ -1,19 +1,30 @@
-import React from 'react';
+import React,  { useState, useEffect  } from 'react';
 import './App.css';
 import Pagination from './components/Pagination';
 import Data from './data.json';
+import Checkbox from '@material-ui/core/Checkbox';
+import Footer from './components/Footer/Footer.js';
+
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      images: [Data],
+      images: Data.map(item => {
+        return {
+          ...item,
+          isSelected: false
+        };
+      }),
       currentPage: 1,
       imagesPerPage: 6,
-      activePage: 1
+      activePage: 1,
     };
     this.handleClick = this.handleClick.bind(this);
+    this.selectedImages = this.selectedImages.bind(this);    
   }
+
+  
 
   handleClick(event) {
     this.setState({
@@ -21,18 +32,43 @@ class App extends React.Component {
     });
   }
 
+
+  selectedImages(indexSelected) {
+    console.log(indexSelected);
+    const nextImagesState = this.state.images.map((image, index) => {
+      let nextSelectedState = image.isSelected;
+      if (index === indexSelected) {
+       nextSelectedState = !image.isSelected;
+     }
+      return {
+        ...image,
+        isSelected: nextSelectedState
+      };
+    });
+    
+    this.setState({
+      ...this.state,
+     images: nextImagesState
+    });
+  }
+
    render() {
     const { images, currentPage, imagesPerPage } = this.state;
 
-    // Logic for displaying images
+  // Logic for displaying images
 
     const indexOfLastImage = currentPage * imagesPerPage;
     const indexOfFirstImage = indexOfLastImage - imagesPerPage;
-    const currentImages = Data.slice(indexOfFirstImage, indexOfLastImage);
+    const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
+  
     const renderImages = currentImages.map((image, index) => {
       return (
           <div key={index} className="images">
+          <div className="checkbox"> 
+          <Checkbox checked={image.isSelected}
+                    onChange={e => {this.selectedImages(indexOfFirstImage + index);}} />
+          </div>
           <img src={image.sample_url} alt="Image" className="image" />
           <div className="title">
           <span className="question-box">?</span>
@@ -45,7 +81,7 @@ class App extends React.Component {
 
     // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(Data.length / imagesPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(images.length / imagesPerPage); i++) {
       pageNumbers.push(i);
     }
 
@@ -64,14 +100,15 @@ class App extends React.Component {
 
         return (
       <div className="App">
-        <div className="header">12 изображений</div>
+        <div className="header">{this.state.images.length} ИЗОБРАЖЕНИЙ</div>
         <div className="wrapper">
-        {renderImages}  
+        {renderImages}
         </div>
         <div className="pages">
         {renderPageNumbers}
         </div>
-        </div>
+        <Footer images={images} />
+      </div>
     );
   }
 }
