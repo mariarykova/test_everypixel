@@ -4,6 +4,7 @@ import Pagination from './components/Pagination';
 import Data from './data.json';
 import Checkbox from '@material-ui/core/Checkbox';
 import Footer from './components/Footer/Footer.js';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 class App extends React.Component {
@@ -34,7 +35,6 @@ class App extends React.Component {
 
 
   selectedImages(indexSelected) {
-    console.log(indexSelected);
     const nextImagesState = this.state.images.map((image, index) => {
       let nextSelectedState = image.isSelected;
       if (index === indexSelected) {
@@ -52,6 +52,16 @@ class App extends React.Component {
     });
   }
 
+
+  deletedImages(indexSelected) {
+    const newImages = this.state.images.filter((image, index) => indexSelected !== index)
+    this.setState({
+      ...this.state,
+      images: newImages
+    });
+}
+
+  
    render() {
     const { images, currentPage, imagesPerPage } = this.state;
 
@@ -65,10 +75,17 @@ class App extends React.Component {
     const renderImages = currentImages.map((image, index) => {
       return (
           <div key={index} className="images">
-          <div className="checkbox"> 
+          <div className="icons">
+            <div className="checkbox"> 
           <Checkbox checked={image.isSelected}
                     onChange={e => {this.selectedImages(indexOfFirstImage + index);}} />
           </div>
+          <div className="trash">
+            <DeleteIcon onClick={e => {this.deletedImages(indexOfFirstImage + index);}} />
+          </div>
+          </div>
+          
+          
           <img src={image.sample_url} alt="Image" className="image" />
           <div className="title">
           <span className="question-box">?</span>
