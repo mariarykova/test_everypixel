@@ -22,12 +22,18 @@
 }
 
 .icons {
+  visibility: hidden;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 300px;
+  width: 350px;
   height: 50px;
   position: absolute;
+}
+
+.share, .trash, .download {
+  z-index: 1;
+  cursor: pointer;
 }
 
 .checkbox {
@@ -35,11 +41,9 @@
   border-radius: 50%;
 }
 
-.trash {
-  z-index: 1;
-  cursor: pointer;
+.checkbox-active {
+  visibility: visible;
 }
-
 
 .images {
   width: 350px;
@@ -48,12 +52,21 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   margin-bottom: 40px;
   position: relative;
+  transition: all 1s ease-out;
 }
 
 .image {
   width: 350px;
   height: 220px;
   background-size: cover;
+}
+
+.images:hover {
+  transform: scale(1.1);
+}
+
+.images:hover .icons{
+  visibility: visible;
 }
 
 .title {

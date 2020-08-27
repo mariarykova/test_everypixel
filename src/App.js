@@ -5,6 +5,10 @@ import Data from './data.json';
 import Checkbox from '@material-ui/core/Checkbox';
 import Footer from './components/Footer/Footer.js';
 import DeleteIcon from '@material-ui/icons/Delete';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import CreditCardIcon from '@material-ui/icons/CreditCard';
+import ShareIcon from '@material-ui/icons/Share';
+import classnames from 'classnames';
 
 
 class App extends React.Component {
@@ -19,7 +23,7 @@ class App extends React.Component {
       }),
       currentPage: 1,
       imagesPerPage: 6,
-      activePage: 1,
+      activePage: 1
     };
     this.handleClick = this.handleClick.bind(this);
     this.selectedImages = this.selectedImages.bind(this);    
@@ -48,7 +52,7 @@ class App extends React.Component {
     
     this.setState({
       ...this.state,
-     images: nextImagesState
+     images: nextImagesState,
     });
   }
 
@@ -61,6 +65,14 @@ class App extends React.Component {
     });
 }
 
+  deleteSelectedImages() {
+  const newImages = this.state.images.filter(image => image.isSelected === false);
+  this.setState({
+    ...this.state,
+    images: newImages
+  });
+}          
+
   
    render() {
     const { images, currentPage, imagesPerPage } = this.state;
@@ -71,27 +83,35 @@ class App extends React.Component {
     const indexOfFirstImage = indexOfLastImage - imagesPerPage;
     const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
+    let className = 'checkbox';
+        if (this.state.images.isSelected) {
+          className += ' checkbox-active';
+        }
+
   
     const renderImages = currentImages.map((image, index) => {
       return (
           <div key={index} className="images">
-          <div className="icons">
-            <div className="checkbox"> 
-          <Checkbox checked={image.isSelected}
-                    onChange={e => {this.selectedImages(indexOfFirstImage + index);}} />
-          </div>
-          <div className="trash">
-            <DeleteIcon onClick={e => {this.deletedImages(indexOfFirstImage + index);}} />
-          </div>
-          </div>
-          
-          
-          <img src={image.sample_url} alt="Image" className="image" />
-          <div className="title">
-          <span className="question-box">?</span>
-          <span className="triangle">&#9660;</span>
-          <span className="text">Выберите лицензию</span>
-          </div>
+            <div className="icons">
+                <div className="checkbox"><Checkbox 
+                        checked={image.isSelected}
+                        onChange={e => {
+                          this.selectedImages(indexOfFirstImage + index);}
+                        }                   
+                        />
+                </div>
+                <div className="share"><ShareIcon /></div>
+                <div className="trash">
+                  <DeleteIcon onClick={e => {this.deletedImages(indexOfFirstImage + index);}} />
+                </div>
+                <div className="download"><GetAppIcon /></div>
+            </div>          
+            <img src={image.sample_url} alt="Image" className="image" />
+            <div className="title">
+            <span className="question-box">?</span>
+            <span className="triangle">&#9660;</span>
+            <span className="text">Выберите лицензию</span>
+            </div>
         </div>
       )
     });
@@ -119,12 +139,12 @@ class App extends React.Component {
       <div className="App">
         <div className="header">{this.state.images.length} ИЗОБРАЖЕНИЙ</div>
         <div className="wrapper">
-        {renderImages}
+          {renderImages}
         </div>
         <div className="pages">
-        {renderPageNumbers}
+          {renderPageNumbers}
         </div>
-        <Footer images={images} />
+          <Footer images={images} deleteSelectedImages={deleteSelectedImages} />
       </div>
     );
   }

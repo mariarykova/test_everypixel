@@ -5,4 +5,27 @@
   align-items: center;
   background: white;
   height: 7vh;
+  margin: 0 auto;
+}
+
+.left {
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 1;
+}
+
+.center {
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+}
+
+.right {
+  flex-basis: 1;
+}
+
+.button {
+  background-color:transparent;
+  border: none;
+  cursor: pointer;
 }
