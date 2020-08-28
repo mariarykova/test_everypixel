@@ -1,6 +1,5 @@
 import React,  { useState, useEffect  } from 'react';
 import './App.css';
-import Pagination from './components/Pagination';
 import Data from './data.json';
 import Checkbox from '@material-ui/core/Checkbox';
 import Footer from './components/Footer/Footer.js';
@@ -9,6 +8,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ShareIcon from '@material-ui/icons/Share';
 import classnames from 'classnames';
+import Pagination from '@material-ui/lab/Pagination';
 
 
 class App extends React.Component {
@@ -23,59 +23,89 @@ class App extends React.Component {
       }),
       currentPage: 1,
       imagesPerPage: 6,
-      activePage: 1
+      activePage: 1,
+      //activeImage: false,
+      selectAllChecked: false
     };
     this.handleClick = this.handleClick.bind(this);
-    this.selectedImages = this.selectedImages.bind(this);    
+    this.selectedImages = this.selectedImages.bind(this);
+    //this.deleteSelectedImages = this.deleteSelectedImages.bind(this);
+    this.selectAllImages = this.selectAllImages.bind(this);
   }
 
   
 
-  handleClick(event) {
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-  }
+      handleClick(event) {
+        this.setState({
+          currentPage: Number(event.target.id)
+        });
+      }
 
+      selectedImages(indexSelected) {
+        const nextImagesState = this.state.images.map((image, index) => {
+        let nextSelectedState = image.isSelected;
+          if (index === indexSelected) {
+          nextSelectedState = !image.isSelected;
+          }
+          return {
+            ...image,
+            isSelected: nextSelectedState
+          };
+        });
+        
+        this.setState({
+        ...this.state,
+        images: nextImagesState,
+        });
+      }
 
-  selectedImages(indexSelected) {
-    const nextImagesState = this.state.images.map((image, index) => {
-      let nextSelectedState = image.isSelected;
-      if (index === indexSelected) {
-       nextSelectedState = !image.isSelected;
+     selectAllImages(){
+        let selectAllChecked = !this.state.selectAllChecked;
+          this.setState({
+              selectAllChecked: selectAllChecked
+          });
+
+          let images = this.state.images.slice();
+          if(selectAllChecked){
+              for(var i = 0; i < this.state.images.length; i++)
+                  images[i].isSelected = true;
+          }
+          else {
+              for(var i = 0; i < this.state.images.length; i++)
+                  images[i].isSelected = false;
+
+          }
+          this.setState({
+              images: images
+          });
      }
-      return {
-        ...image,
-        isSelected: nextSelectedState
-      };
-    });
-    
-    this.setState({
-      ...this.state,
-     images: nextImagesState,
-    });
-  }
 
 
-  deletedImages(indexSelected) {
-    const newImages = this.state.images.filter((image, index) => indexSelected !== index)
-    this.setState({
-      ...this.state,
-      images: newImages
-    });
-}
-
-  deleteSelectedImages() {
-  const newImages = this.state.images.filter(image => image.isSelected === false);
-  this.setState({
-    ...this.state,
-    images: newImages
-  });
-}          
+      deleteImage(indexSelected) {
+       const newImages = this.state.images.filter((image, index) => indexSelected !== index)
+        this.setState({
+          ...this.state,
+          images: newImages
+       });
+      }
+      
+      // deleteSelectedImages() {
+      //   const newImages = this.state.images.filter(image => image.isSelected === false)
+      //   this.setState ({
+      //     ...this.state,
+      //     images: newImages
+      //   });
+      // }
 
   
    render() {
     const { images, currentPage, imagesPerPage } = this.state;
+    //const { activeImage } = this.state.images;
+    // let classNames = 'checkbox';
+
+    //if (activeImage) {
+    //  classNames += ' checkbox-active';
+   // }
 
   // Logic for displaying images
 
@@ -83,12 +113,6 @@ class App extends React.Component {
     const indexOfFirstImage = indexOfLastImage - imagesPerPage;
     const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
-    let className = 'checkbox';
-        if (this.state.images.isSelected) {
-          className += ' checkbox-active';
-        }
-
-  
     const renderImages = currentImages.map((image, index) => {
       return (
           <div key={index} className="images">
@@ -102,7 +126,7 @@ class App extends React.Component {
                 </div>
                 <div className="share"><ShareIcon /></div>
                 <div className="trash">
-                  <DeleteIcon onClick={e => {this.deletedImages(indexOfFirstImage + index);}} />
+                  <DeleteIcon onClick={e => {this.deleteImage(indexOfFirstImage + index);}} />
                 </div>
                 <div className="download"><GetAppIcon /></div>
             </div>          
@@ -111,6 +135,7 @@ class App extends React.Component {
             <span className="question-box">?</span>
             <span className="triangle">&#9660;</span>
             <span className="text">Выберите лицензию</span>
+            <CreditCardIcon />
             </div>
         </div>
       )
@@ -118,17 +143,15 @@ class App extends React.Component {
 
     // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(images.length / imagesPerPage); i++) {
-      pageNumbers.push(i);
-    }
+    for (let i = 1; i <= Math.ceil(images.length / imagesPerPage); i++)
+       pageNumbers.push(i)
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         <div className="pagination"
           key={number}
           id={number}
-          onClick={this.handleClick}
-        >
+          onClick={this.handleClick}>
           {number}
         </div>
       );
@@ -142,9 +165,12 @@ class App extends React.Component {
           {renderImages}
         </div>
         <div className="pages">
-          {renderPageNumbers}
+          {renderPageNumbers}       
         </div>
-          <Footer images={images} deleteSelectedImages={deleteSelectedImages} />
+          <Footer images={images} 
+          selectAllImages={this.selectAllImages}
+          // deleteSelectedImages={this.deleteSelectedImages}
+         />
       </div>
     );
   }
