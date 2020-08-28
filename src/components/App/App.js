@@ -1,7 +1,7 @@
 import React,  { useState, useEffect  } from 'react';
 import './App.css';
 import Data from './data.json';
-import Footer from './components/Footer/Footer.js';
+import Footer from '../Footer/Footer.js';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteIcon from '@material-ui/icons/Delete';
