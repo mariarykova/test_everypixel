@@ -128,10 +128,21 @@
 }
 
 .pagination {
-  background: #f2f6f8; /* Цвет фона */
-  width: 60px; /* Ширина кнопки */
-  height: 60px; /* Высота */
+  border-radius: 100%;
+  background-color: #f500577a;
+  color: white;
+  padding: 2px 10px;
+  margin-bottom: 30px;
+  cursor: pointer;
   }
+
+  .pagination:hover {
+    background-color: #f50057;
+  }
+
+.activepag {
+  background-color: #f50057;
+}
 
 .pages {
   display: flex;

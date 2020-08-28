@@ -7,9 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ShareIcon from '@material-ui/icons/Share';
-import classnames from 'classnames';
-import Pagination from '@material-ui/lab/Pagination';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import Pagination from '@material-ui/lab/Pagination';
 
 
 class App extends React.Component {
@@ -24,8 +23,7 @@ class App extends React.Component {
       }),
       currentPage: 1,
       imagesPerPage: 6,
-      activePage: 1,
-      // activeImage: false,
+      activePage: '',
       selectAllChecked: false
     };
     this.handleClick = this.handleClick.bind(this);
@@ -36,20 +34,19 @@ class App extends React.Component {
 
   
 
-      handleClick(event) {
+      handleClick(e, index) {
         this.setState({
-          currentPage: Number(event.target.id)
+          currentPage: Number(index),
+          activePage: index
         });
       }
 
       selectedImages(indexSelected) {
         const nextImagesState = this.state.images.map((image, index) => {
-        // let classNames = 'checkbox';
         let nextSelectedState = image.isSelected;
           if (index === indexSelected) {
           nextSelectedState = !image.isSelected;
-          // classNames += ' checkbox-active';
-          }
+        }
           return {
             ...image,
             isSelected: nextSelectedState
@@ -156,15 +153,21 @@ class App extends React.Component {
     for (let i = 1; i <= Math.ceil(images.length / imagesPerPage); i++)
        pageNumbers.push(i)
 
-    const renderPageNumbers = pageNumbers.map(number => {
+    const renderPageNumbers = pageNumbers.map((number, index) => {
+      const active = this.state.activePage;
+      let classPag = 'pagination';
+      if (active === number) {
+        classPag += ' activepag';
+      }
+      
       return (
-        <div className="pagination"
+        <div className={classPag}
           key={number}
           id={number}
-          onClick={this.handleClick}
+          onClick={(e) => this.handleClick(e, number)}
           >
           {number}
-        </div>
+        </div>       
       );
     });
 
