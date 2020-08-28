@@ -36,6 +36,15 @@
   cursor: pointer;
 }
 
+.visibility {
+  position: absolute;
+  z-index: 0;
+  top: 35%;
+  left: 50%;
+  visibility: hidden;
+}
+
+
 .checkbox {
   z-index: 1;
   border-radius: 50%;
@@ -65,8 +74,21 @@
   transform: scale(1.1);
 }
 
-.images:hover .icons{
+.images:hover .icons {
   visibility: visible;
+}
+
+.images:hover .creditcard {
+  visibility: visible;
+}
+
+.images:hover .visibility {
+  visibility: visible;
+}
+
+.creditcard {
+  visibility: hidden;
+  z-index: 1;
 }
 
 .title {

@@ -9,6 +9,7 @@ import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ShareIcon from '@material-ui/icons/Share';
 import classnames from 'classnames';
 import Pagination from '@material-ui/lab/Pagination';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 
 class App extends React.Component {
@@ -29,7 +30,7 @@ class App extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.selectedImages = this.selectedImages.bind(this);
-    //this.deleteSelectedImages = this.deleteSelectedImages.bind(this);
+    this.deleteSelectedImages = this.deleteSelectedImages.bind(this);
     this.selectAllImages = this.selectAllImages.bind(this);
   }
 
@@ -89,13 +90,13 @@ class App extends React.Component {
        });
       }
       
-      // deleteSelectedImages() {
-      //   const newImages = this.state.images.filter(image => image.isSelected === false)
-      //   this.setState ({
-      //     ...this.state,
-      //     images: newImages
-      //   });
-      // }
+      deleteSelectedImages() {
+        const newImages = this.state.images.filter(image => image.isSelected === false)
+        this.setState ({
+          ...this.state,
+          images: newImages
+        });
+      }
 
   
    render() {
@@ -129,13 +130,14 @@ class App extends React.Component {
                   <DeleteIcon onClick={e => {this.deleteImage(indexOfFirstImage + index);}} />
                 </div>
                 <div className="download"><GetAppIcon /></div>
-            </div>          
+            </div> 
+            <div className="visibility"><VisibilityIcon fontSize="large" /></div>         
             <img src={image.sample_url} alt="Image" className="image" />
             <div className="title">
             <span className="question-box">?</span>
             <span className="triangle">&#9660;</span>
             <span className="text">Выберите лицензию</span>
-            <CreditCardIcon />
+            <span><CreditCardIcon className="creditcard"/></span>
             </div>
         </div>
       )
@@ -169,7 +171,7 @@ class App extends React.Component {
         </div>
           <Footer images={images} 
           selectAllImages={this.selectAllImages}
-          // deleteSelectedImages={this.deleteSelectedImages}
+          deleteSelectedImages={this.deleteSelectedImages}
          />
       </div>
     );

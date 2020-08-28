@@ -29,3 +29,14 @@
   border: none;
   cursor: pointer;
 }
+
+.selected {
+  background-color: #f50057;
+  color: white;
+  font-weight: 500;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 100%;
+  padding: 1px 7px;
+  margin-right: 5px;
+}
