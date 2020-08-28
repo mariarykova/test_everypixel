@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.button__selecte {
+  margin-right: 10px;
+}
+
 .selected {
   background-color: #f50057;
   color: white;
@@ -37,6 +41,8 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 100%;
-  padding: 1px 7px;
   margin-right: 5px;
+  width: 28px;
+  height: 28px;
+  padding-top: 2px;
 }
