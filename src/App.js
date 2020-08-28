@@ -25,7 +25,7 @@ class App extends React.Component {
       currentPage: 1,
       imagesPerPage: 6,
       activePage: 1,
-      //activeImage: false,
+      // activeImage: false,
       selectAllChecked: false
     };
     this.handleClick = this.handleClick.bind(this);
@@ -44,9 +44,11 @@ class App extends React.Component {
 
       selectedImages(indexSelected) {
         const nextImagesState = this.state.images.map((image, index) => {
+        // let classNames = 'checkbox';
         let nextSelectedState = image.isSelected;
           if (index === indexSelected) {
           nextSelectedState = !image.isSelected;
+          // classNames += ' checkbox-active';
           }
           return {
             ...image,
@@ -101,13 +103,7 @@ class App extends React.Component {
   
    render() {
     const { images, currentPage, imagesPerPage } = this.state;
-    //const { activeImage } = this.state.images;
-    // let classNames = 'checkbox';
-
-    //if (activeImage) {
-    //  classNames += ' checkbox-active';
-   // }
-
+    
   // Logic for displaying images
 
     const indexOfLastImage = currentPage * imagesPerPage;
@@ -115,29 +111,41 @@ class App extends React.Component {
     const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
     const renderImages = currentImages.map((image, index) => {
+
+      const { isSelected } = this.state.images;
+      let classNames = 'checkbox';
+      let  visibility = 'visibility';
+      if (image.isSelected === true) {
+      classNames += ' active';
+      visibility += ' active';
+    }
+
       return (
-          <div key={index} className="images">
+        <div key={index} className="images">
             <div className="icons">
-                <div className="checkbox"><Checkbox 
+                <div className={classNames}>
+                  <Checkbox 
                         checked={image.isSelected}
                         onChange={e => {
                           this.selectedImages(indexOfFirstImage + index);}
-                        }                   
-                        />
+                        } 
+                  />
                 </div>
-                <div className="share"><ShareIcon /></div>
-                <div className="trash">
-                  <DeleteIcon onClick={e => {this.deleteImage(indexOfFirstImage + index);}} />
+                <div className="icons__left">
+                  <div className="share"><ShareIcon /></div>
+                  <div className="trash"><DeleteIcon onClick={e => {this.deleteImage(indexOfFirstImage + index);}} /></div>
+                  <div className="download"><GetAppIcon /></div>
                 </div>
-                <div className="download"><GetAppIcon /></div>
             </div> 
-            <div className="visibility"><VisibilityIcon fontSize="large" /></div>         
+            <div className={visibility}><VisibilityIcon fontSize="large" /></div>         
             <img src={image.sample_url} alt="Image" className="image" />
             <div className="title">
-            <span className="question-box">?</span>
-            <span className="triangle">&#9660;</span>
-            <span className="text">Выберите лицензию</span>
-            <span><CreditCardIcon className="creditcard"/></span>
+              <div className="title__info">
+                <span className="question-box">?</span>
+                <span className="triangle">&#9660;</span>
+                <span className="text">Выберите лицензию</span>
+              </div>
+              <div><CreditCardIcon className="creditcard"/></div>
             </div>
         </div>
       )
@@ -153,7 +161,8 @@ class App extends React.Component {
         <div className="pagination"
           key={number}
           id={number}
-          onClick={this.handleClick}>
+          onClick={this.handleClick}
+          >
           {number}
         </div>
       );
@@ -167,7 +176,7 @@ class App extends React.Component {
           {renderImages}
         </div>
         <div className="pages">
-          {renderPageNumbers}       
+          {renderPageNumbers}
         </div>
           <Footer images={images} 
           selectAllImages={this.selectAllImages}

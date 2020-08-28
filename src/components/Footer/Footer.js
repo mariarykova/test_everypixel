@@ -16,7 +16,7 @@ const Footer = ({ images, deleteSelectedImages, selectAllImages }) => {
       <div className="footer">
         <div className="left">
           <button className="button"><RemoveCircleOutlineIcon onClick={selectAllImages} /></button>
-          <div><span className="selected">{selected} </span>выбрано</div>
+          <div><span className="selected">{selected} </span></div>
         </div>
         <div className="center">
            <button className="button"><DeleteIcon onClick={deleteSelectedImages} /></button>
